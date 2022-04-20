@@ -1,0 +1,15 @@
+C:\Users\janek\OneDrive\Dokumenty\Venusos Botnet Server\bin\Debug\net6.0\Venusos Botnet Server.exe
+C:\Users\janek\OneDrive\Dokumenty\Venusos Botnet Server\bin\Debug\net6.0\Venusos Botnet Server.deps.json
+C:\Users\janek\OneDrive\Dokumenty\Venusos Botnet Server\bin\Debug\net6.0\Venusos Botnet Server.runtimeconfig.json
+C:\Users\janek\OneDrive\Dokumenty\Venusos Botnet Server\bin\Debug\net6.0\Venusos Botnet Server.dll
+C:\Users\janek\OneDrive\Dokumenty\Venusos Botnet Server\bin\Debug\net6.0\Venusos Botnet Server.pdb
+C:\Users\janek\OneDrive\Dokumenty\Venusos Botnet Server\obj\Debug\net6.0\Venusos Botnet Server.csproj.AssemblyReference.cache
+C:\Users\janek\OneDrive\Dokumenty\Venusos Botnet Server\obj\Debug\net6.0\Venusos Botnet Server.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\janek\OneDrive\Dokumenty\Venusos Botnet Server\obj\Debug\net6.0\Venusos Botnet Server.AssemblyInfoInputs.cache
+C:\Users\janek\OneDrive\Dokumenty\Venusos Botnet Server\obj\Debug\net6.0\Venusos Botnet Server.AssemblyInfo.cs
+C:\Users\janek\OneDrive\Dokumenty\Venusos Botnet Server\obj\Debug\net6.0\Venusos Botnet Server.csproj.CoreCompileInputs.cache
+C:\Users\janek\OneDrive\Dokumenty\Venusos Botnet Server\obj\Debug\net6.0\Venusos Botnet Server.dll
+C:\Users\janek\OneDrive\Dokumenty\Venusos Botnet Server\obj\Debug\net6.0\refint\Venusos Botnet Server.dll
+C:\Users\janek\OneDrive\Dokumenty\Venusos Botnet Server\obj\Debug\net6.0\Venusos Botnet Server.pdb
+C:\Users\janek\OneDrive\Dokumenty\Venusos Botnet Server\obj\Debug\net6.0\Venusos Botnet Server.genruntimeconfig.cache
+C:\Users\janek\OneDrive\Dokumenty\Venusos Botnet Server\obj\Debug\net6.0\ref\Venusos Botnet Server.dll
