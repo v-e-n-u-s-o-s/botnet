@@ -102,7 +102,7 @@ namespace Venusos_Botnet_Server
                                 }
                                 else
                                 {
-                                    networkStream.Write(Encoding.ASCII.GetBytes("ddos [METHOD] [IP] [PORT] [DURATION] [THREADS]\n\r"));
+                                    networkStream.Write(Encoding.ASCII.GetBytes("ddos [METHOD] [IP/URL] [PORT] [DURATION] [THREADS]\n\r"));
                                 }
                             }
                         }

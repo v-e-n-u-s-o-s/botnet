@@ -43,7 +43,7 @@ namespace Venusos_Botnet_Server
 
             try
             {
-                command.IP = IPAddress.Parse(options[2]).ToString();
+                command.IP = options[2];
             }
             catch
             {
