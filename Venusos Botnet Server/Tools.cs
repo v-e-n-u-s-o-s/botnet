@@ -16,6 +16,18 @@ namespace Venusos_Botnet_Server
             }
             return IPAddress.Parse(localIP);
         }
+        public static string GetPassword()
+        {
+            string directory = Directory.GetCurrentDirectory();
+            string file = Directory.GetFiles(directory, "*.password").FirstOrDefault(directory + "\\default.password");
+            file = file.Substring(directory.Length + 1, file.Length - (directory.Length + 10));
+            if (file == "default")
+            {
+                File.Create("default.password");
+                Console.WriteLine("Rename default.password to [your password].password\n");
+            }
+            return file;
+        }
         public static Command CreateCommand(string data)
         {
             string[] options = data.Split(" ");
