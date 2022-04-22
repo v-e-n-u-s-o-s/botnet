@@ -115,10 +115,11 @@ namespace Venusos_Botnet_Server
                 }
                 catch
                 {
-                    Console.WriteLine("Client disconnected");
+
                 }
                 finally
                 {
+                    Console.WriteLine("Client disconnected");
                     tcpListener.Stop();
                 }
             }
