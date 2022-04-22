@@ -42,7 +42,6 @@ namespace Venusos_Botnet_Server
 
                         if (!logged)
                         {
-                            Console.WriteLine(data);
                             if (data is "test")
                             {
                                 Console.WriteLine("Client connected");
