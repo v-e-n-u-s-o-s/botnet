@@ -113,9 +113,9 @@ namespace Venusos_Botnet_Server
                         }
                     }
                 }
-                catch
+                catch (Exception e)
                 {
-
+                    Console.WriteLine(e);
                 }
                 finally
                 {
