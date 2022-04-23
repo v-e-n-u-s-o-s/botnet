@@ -46,17 +46,17 @@ namespace Venusos_Botnet_Server
         public static Command CreateCommand(string data)
         {
             string[] options = data.Split(" ");
-            string error = null;
 
             if (options.Length < 6)
             {
-                throw new Exception("Not enough arguments\n");
+                throw new Exception("not enough arguments\n");
             }
             else if (options.Length > 6)
             {
-                throw new Exception("Too many arguments\n");
+                throw new Exception("too many arguments\n");
             }
 
+            string error = null;
             Command command = new Command();
 
             if (!new List<string> { "http", "tcp", "udp" }.Contains(options[1]))
