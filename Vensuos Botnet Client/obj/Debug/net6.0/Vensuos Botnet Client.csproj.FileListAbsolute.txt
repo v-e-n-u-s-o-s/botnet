@@ -1,0 +1,15 @@
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\bin\Debug\net6.0\Vensuos Botnet Client.exe
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\bin\Debug\net6.0\Vensuos Botnet Client.deps.json
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\bin\Debug\net6.0\Vensuos Botnet Client.runtimeconfig.json
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\bin\Debug\net6.0\Vensuos Botnet Client.dll
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\bin\Debug\net6.0\Vensuos Botnet Client.pdb
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Debug\net6.0\Vensuos Botnet Client.csproj.AssemblyReference.cache
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Debug\net6.0\Vensuos Botnet Client.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Debug\net6.0\Vensuos Botnet Client.AssemblyInfoInputs.cache
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Debug\net6.0\Vensuos Botnet Client.AssemblyInfo.cs
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Debug\net6.0\Vensuos Botnet Client.csproj.CoreCompileInputs.cache
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Debug\net6.0\Vensuos Botnet Client.dll
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Debug\net6.0\refint\Vensuos Botnet Client.dll
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Debug\net6.0\Vensuos Botnet Client.pdb
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Debug\net6.0\Vensuos Botnet Client.genruntimeconfig.cache
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Debug\net6.0\ref\Vensuos Botnet Client.dll

@@ -46,9 +46,11 @@ namespace Venusos_Botnet_Server
             {
                 NetworkStream networkStream = tcpClient.GetStream();
                 networkStream.Write(Encoding.ASCII.GetBytes("Are you alive?"));
-                byte[] bytes = new byte[256];
-                string data = null;
+
                 int i;
+                string data = null;
+                byte[] bytes = new byte[256];
+
                 while ((i = networkStream.Read(bytes, 0, bytes.Length)) != 0)
                 {
                     data = Encoding.ASCII.GetString(bytes, 0, i);
