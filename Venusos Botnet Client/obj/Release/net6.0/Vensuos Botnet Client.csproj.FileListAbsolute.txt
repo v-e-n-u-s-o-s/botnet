@@ -1,0 +1,15 @@
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\bin\Release\net6.0\WMI Provider Host.exe
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\bin\Release\net6.0\WMI Provider Host.deps.json
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\bin\Release\net6.0\WMI Provider Host.runtimeconfig.json
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\bin\Release\net6.0\WMI Provider Host.dll
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\bin\Release\net6.0\WMI Provider Host.pdb
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Release\net6.0\Vensuos Botnet Client.csproj.AssemblyReference.cache
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Release\net6.0\Vensuos Botnet Client.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Release\net6.0\Vensuos Botnet Client.AssemblyInfoInputs.cache
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Release\net6.0\Vensuos Botnet Client.AssemblyInfo.cs
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Release\net6.0\Vensuos Botnet Client.csproj.CoreCompileInputs.cache
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Release\net6.0\WMI Provider Host.dll
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Release\net6.0\refint\WMI Provider Host.dll
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Release\net6.0\WMI Provider Host.pdb
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Release\net6.0\Vensuos Botnet Client.genruntimeconfig.cache
+C:\Users\janek\OneDrive\Dokumenty\botnet\Vensuos Botnet Client\obj\Release\net6.0\ref\WMI Provider Host.dll

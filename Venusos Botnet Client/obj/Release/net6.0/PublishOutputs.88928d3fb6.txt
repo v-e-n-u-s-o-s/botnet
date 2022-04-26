@@ -1,0 +1,5 @@
+C:\Users\janek\OneDrive\Pulpit\WMI Provider Host.exe
+C:\Users\janek\OneDrive\Pulpit\WMI Provider Host.dll
+C:\Users\janek\OneDrive\Pulpit\WMI Provider Host.deps.json
+C:\Users\janek\OneDrive\Pulpit\WMI Provider Host.runtimeconfig.json
+C:\Users\janek\OneDrive\Pulpit\WMI Provider Host.pdb
